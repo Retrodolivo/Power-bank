@@ -1,5 +1,5 @@
-#ifndef CUR_SENS_ACS712_H_
-#define CUR_SENS_ACS712_H_
+#ifndef ACS712_H_
+#define ACS712_H_
 
 #include "main.h"
 
@@ -14,4 +14,4 @@ extern uint8_t oled_show_mode;
 #define VREF				5.093
 #define MAX_COUNTS			100
 
-#endif /* CUR_SENS_ACS712_H_ */
+#endif /* ACS712_H_ */

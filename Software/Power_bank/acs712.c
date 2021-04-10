@@ -1,4 +1,4 @@
-#include "cur_sens_acs712.h"
+#include "acs712.h"
 
 static uint8_t meas_num;
 static uint8_t adc_values[MAX_COUNTS];
