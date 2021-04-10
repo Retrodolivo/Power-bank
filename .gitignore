@@ -1,0 +1,9 @@
+#Software
+Software/Power_bank/Debug/
+Software/.vs/
+Power_bank.componentinfo.xml
+
+#Hardware
+Hardware/Altium/Power_bank/History/
+Hardware/Altium/Power_bank/Project Logs for Power_bank/
+Hardware/Altium/Power_bank/Project Outputs for Power_bank/
