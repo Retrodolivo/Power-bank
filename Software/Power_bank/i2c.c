@@ -1,33 +1,47 @@
 #include "i2c.h"
 
-#define F_SCL 350000 
 
-void i2c_init(void)
+void i2c_init(enum i2c_speed speed)
 {
-	TWBR = ((F_CPU/F_SCL) - 16)/2;			//fscl
+	switch(speed)
+	{
+		case Standart:
+			TWBR = (F_CPU / 100000 - 16) / 2;
+			break;
+			
+		case Fast:
+			TWBR = (F_CPU / 400000 - 16) / 2;
+			break;
+	}
 }
 
 void i2c_start(void)
 {
-	TWCR = (1<<TWINT)|(1<<TWSTA)|(1<<TWEN);	//set HIGH at SCL(TWINT), set state START(TWSTA), enable interface(TWEN)
-	while(!(TWCR&(1<<TWINT)));				//wait until SCL goes LOW
+	/*Set HIGH at SCL(TWINT), Generate START(TWSTA), Enable I2C(TWEN)*/
+	TWCR = 1<<TWINT | 1<<TWSTA | 1<<TWEN;
+	/*Wait till SCL LOW*/
+	while(!(TWCR & 1<<TWINT));			 
 }
 
 void i2c_stop(void)
 {
-	TWCR = (1<<TWINT)|(1<<TWSTO)|(1<<TWEN);
+	/*Clear interrupt flag(TWINT), Generate STOP(TWSTO)*/
+	TWCR = 1<<TWINT | 1<<TWSTO | 1<<TWEN;
 }
 
-void i2c_sendbyte(uint8_t data)
+void i2c_sendbyte(uint8_t byte)
 {
-	TWDR = data;
-	TWCR = (1<<TWINT)|(1<<TWEN);
-	while(!(TWCR&(1<<TWINT)));
+	TWDR = byte;
+	TWCR = 1<<TWINT | 1<<TWEN;
+	/*Wait till SCL LOW*/
+	while(!(TWCR & 1<<TWINT));
 }
 
 uint8_t i2c_readbyte(void)
 {
-	TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWEA);
+	/*Set HIGH at SCL(TWINT), Enable I2C(TWEN), Set ACK bit(TWEA)*/
+	TWCR = 1<<TWINT | 1<<TWEN | 1<<TWEA;
+	/*Wait till SCL LOW*/
 	while(!(TWCR&(1<<TWINT)));
 	return TWDR;
 }
