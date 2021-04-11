@@ -55,6 +55,7 @@ void oled_clear(void);
 void oled_clear_line_seg(uint8_t x1, uint8_t x2, uint8_t y);
 void oled_goto(uint8_t x, uint8_t y);
 void oled_print6x8(char *buff);
+void oled_print(uint8_t x, uint8_t y, char *buff);
 void oled_print8x16(char *buff);
 
 

@@ -1,7 +1,6 @@
 #include "oled_ssd1306.h"
 
 static void oled_char6x8(uint8_t c);
-//static void oled_char8x16(uint8_t c);
 static void ssd1306_write(uint8_t ctrl_byte, uint8_t data_byte);
 static uint8_t oled_x,
 			   oled_y;
@@ -94,9 +93,12 @@ void oled_goto(uint8_t x, uint8_t y)
 	oled_x = x;
 	oled_y = y;
 	
-	ssd1306_write(CMD, 0xB0 + y);		//установить адрес начала координат
-	ssd1306_write(CMD, x & 0xF);		//установить нижний адрес столбца
-	ssd1306_write(CMD, 0x10 | (x >> 4));//установить верхний адрес столбца
+	/*Set origin address*/
+	ssd1306_write(CMD, 0xB0 + y);		
+	/*Set column low address*/
+	ssd1306_write(CMD, x & 0xF);
+	/*Set column high address*/
+	ssd1306_write(CMD, 0x10 | (x >> 4));
 }
 
 static void oled_char6x8(uint8_t c)
@@ -106,7 +108,8 @@ static void oled_char6x8(uint8_t c)
 	i2c_sendbyte(DATAS);
 	for(uint8_t x = 0; x < 6; x++)
 		i2c_sendbyte(oled_font6x8[(c - 32) * 6 + x]);
-	i2c_sendbyte(0x00);					//пробел в одну точку между символами
+	/*Put dot between symbols*/
+	i2c_sendbyte(0x00);					
 	i2c_stop();
 
 	oled_x += 8;
@@ -114,23 +117,18 @@ static void oled_char6x8(uint8_t c)
 		oled_x = SSD1306_DEFAULT_SPACE;
 }
 
-//static void oled_char8x16(uint8_t c)
-//{
-	//i2c_start();
-	//i2c_sendbyte(SSD1306_I2C_ADDR);
-	//i2c_sendbyte(DATAS);
-	//for(uint8_t x = 0; x < 16; x++)
-		//i2c_sendbyte(oled_font8x16[(c - 32) * 16 + x]);
-	//i2c_sendbyte(0x00);					//пробел в одну точку между символами
-	//i2c_stop();
-//
-	//oled_x += 16;
-	//if(oled_x > SSD1306_OLEDWIDTH)
-		//oled_x = SSD1306_DEFAULT_SPACE;
-//}
-
-void oled_print6x8(char *buff)
+void oled_print(uint8_t x, uint8_t y, char *buff)
 {
+	oled_x = x;
+	oled_y = y;
+		
+	/*Set origin address*/
+	ssd1306_write(CMD, 0xB0 + y);
+	/*Set column low address*/
+	ssd1306_write(CMD, x & 0xF);
+	/*Set column high address*/
+	ssd1306_write(CMD, 0x10 | (x >> 4));
+	
 	while (*buff!=0)
 	{
 		if((oled_x > SSD1306_OLEDWIDTH) || (oled_x < 5))
@@ -139,12 +137,12 @@ void oled_print6x8(char *buff)
 	}
 }
 
-//void oled_print8x16(char *buff)
-//{
-	//while (*buff!=0)
-	//{
-		//if((oled_x > SSD1306_OLEDWIDTH) || (oled_x < 5))
-			//oled_x = SSD1306_DEFAULT_SPACE;
-		//oled_char8x16(*buff++);
-	//}
-//}
+void oled_print6x8( char *buff)
+{	
+	while (*buff!=0)
+	{
+		if((oled_x > SSD1306_OLEDWIDTH) || (oled_x < 5))
+		oled_x = SSD1306_DEFAULT_SPACE;
+		oled_char6x8(*buff++);
+	}
+}
