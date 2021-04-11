@@ -12,27 +12,38 @@
 #include "i2c.h"
 #include "spi.h"
 #include "oled_ssd1306.h"
-#include "ssd1306_font.h"
-#include "adc_mcp3201.h"
-#include "cur_sens_acs712.h"
-#include "RTC_DS3231.h"
+#include "oled_font.h"
+#include "adc3201.h"
+#include "acs712.h"
+#include "rtc_ds3231.h"
+#include "pwm_led.h"
+#include "button.h"
 
-#define SW_IN_PIN			PORTD6
-#define SW_OUT_PIN			PORTD7
 
-#define SW_BTN_PIN			PORTD2
+#define ANLG_SWITCH_DDR				DDRD
+#define ANLG_SWITCH_PORT			PORTD
+ 
+#define SWITCH_INPUT_PIN			PORTD6
+#define SWITCH_OUTPUT_PIN			PORTD7
 
-#define SW_IN_PIN_LOW		PORTD &= ~(1<<SW_IN_PIN);
-#define SW_OUT_PIN_LOW		PORTD &= ~(1<<SW_OUT_PIN);
-#define SW_IN_PIN_HIGH		PORTD |= 1<<SW_IN_PIN;
-#define SW_OUT_PIN_HIGH		PORTD |= 1<<SW_OUT_PIN;
+#define SWITCH_INPUT_PIN_LOW		ANLG_SWITCH_PORT &= ~(1<<SWITCH_INPUT_PIN);
+#define SWITCH_OUTPUT_PIN_LOW		ANLG_SWITCH_PORT &= ~(1<<SWITCH_OUTPUT_PIN);
+#define SWITCH_INPUT_PIN_HIGH		ANLG_SWITCH_PORT |= 1<<SWITCH_INPUT_PIN;
+#define SWITCH_OUTPUT_PIN_HIGH		ANLG_SWITCH_PORT |= 1<<SWITCH_OUTPUT_PIN;
 
-#define INPUT_SENS_PIN		PORTD5
-#define PWM_LED_PIN			PORTB1
+#define INPUT_SENS_DDR				DDRD
+#define INPUT_SENS_PORT				PORTD
+#define INPUT_SENS_PIN				PORTD5
 
-#define MODEIDLE			0		
-#define MODEINPUT			1
-#define MODEOUTPUT			2
+#define	CHARGING					(PIND&(1<<INPUT_SENS_PIN))
+#define	NOT_CHARGING				(!(PIND&(1<<INPUT_SENS_PIN)))
+
+enum Oled_show_mode
+{
+	MODEIDLE,
+	MODEINPUT,
+	MODEOUTPUT
+};
 
 
 #endif /* MAIN_H_ */
