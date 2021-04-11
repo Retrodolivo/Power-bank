@@ -3,6 +3,6 @@
 
 #include "main.h"
 
-float adc3201_get(void);
+float get_voltage(void);
 
 #endif /* ADC3201_H_ */

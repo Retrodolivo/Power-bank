@@ -26,7 +26,7 @@ static uint16_t adc3201_raw(void)
 	return data;
 }
 
-float adc3201_get(void)
+float get_voltage(void)
 {
 	float voltage;
 
