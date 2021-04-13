@@ -18,6 +18,13 @@ Power bank is a portable charger device. It designed to recharge electronic gadg
 ### Power
 
 <p align="center">
-<img src="img/powerbank_block.jpg" width="60%"></p>
+<img src="img/powerbank_block.jpg" width="30%"></p>
 
-Step-up MT3608 based module is responsible for power bank output characteristics MT3608 is generating 5V output. 18650 minimal allowed voltage is 2.5V. MT3608 minimum input voltage is 2V. So requared 5V would be during full battery lifespan. TP4056 is an linear charger IC. It work is to control charge cycle, to charge to fix 4.2V with constant current which can be programmed externally with a single resistor. To power up a device logic part a step-up B6288 based module was used. It is 5V 0.4W module(max current was determinated experimentally). 
+Step-up MT3608 based module is responsible for power bank output characteristics MT3608 is generating 5V output. 18650 minimal allowed voltage is 2.5V. MT3608 minimum input voltage is 2V. So requared 5V would be during full battery lifespan. TP4056 is an linear charger IC. It work is to control charge cycle, to charge to fix 4.2V with constant current which can be programmed externally with a single resistor. To power up a device logic part a step-up B6288 based module was used. It is 5V 0.4W module(max current was determinated experimentally).
+
+### Logic
+
+<p align="center">
+<img src="img/powerbank_logic.jpg" width="50%"></p>
+
+
