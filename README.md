@@ -7,11 +7,13 @@
 **Telling you right away - this is an educational project. My goal was to build a needlessly complex system to try a new ICs, sensors, etc.**
 Power bank is a portable charger device. It designed to recharge electronic gadgets when you don't have access to a regular wall charger. As I don't dont have one I decide to build my own power bank. 
 
-## Features 
+### Features 
 * 3 parallel 18650 Li-Po batteries with total capacity up to 10000mAh(at 3.7V);
 * One output USB connector. USB type-c input connector;
 * Output parameters: 5V 2A;
-* OLED display. Real-time indication of charging status;
+* OLED display. Real-time indication of charging statuses;
 * 4 level LED battery capacity indication;
-* Beautiful LED glowing:)
+* Beautiful LED glowing :)
 
+### Power
+Step-up MT3608 based module is responsible for power bank output characteristics. 18650 minimal allowed voltage is 2.5V. MT3608 minimum input voltage is 2V.  
